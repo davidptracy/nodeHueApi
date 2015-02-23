@@ -1,0 +1,17 @@
+{
+  "name": "04_lighting_controller",
+  "version": "0.0.0",
+  "description": "MyFirstProject",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.11.2",
+    "node-hue-api": "^1.0.5",
+    "node": "^0.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "DT",
+  "license": "CREATIVE"
+}

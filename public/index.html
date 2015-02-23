@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<link href='http://fonts.googleapis.com/css?family=Lato:300,100' rel='stylesheet' type='text/css'>
+	<style type="text/css">
+		body{
+			background: white;
+			font-family: 'Lato', sans-serif;
+			font-size: 20px;
+		}
+
+		.header{
+			/*margin: 20px;*/
+			margin-bottom: 50px;
+			/*padding: 10px;*/
+			height: 200px;
+			font-size: 48px;
+			font-weight: 100;
+
+			background-image: none;
+			background-repeat: no-repeat;
+			background-position: center center;
+			background-attachment: fixed;
+			-o-background-size: 100% 100%, auto;
+			-moz-background-size: 100% 100%, auto;
+			-webkit-background-size: 100% 100%, auto;
+			background-size: 100% 100%, auto;
+		}
+
+		.headerText{
+			padding: 30px;
+			display: inline;
+		}
+
+		.dropDown{
+			width: 30%;
+			float: left;
+			margin: 20px;
+			padding: 10px;
+			color: black;
+			border-color: rgb(200,200,200);
+			border-style: none;
+			border-width: 1px;
+			min-height: 350px;
+			max-width: 30%;
+			display: inline;
+		}
+
+		select {
+			background: white;
+			width: 100%;
+			font-family:  'Lato', sans-serif;
+			font-size: 36px;
+			height: 50px;
+			border-style: solid;
+		}
+
+		#weatherDiv {
+			display: none;
+		}
+
+		#seasonsDiv {
+			display: none;
+		}
+
+		#placesDiv {
+			display: none;
+		}
+
+		#materialsDiv {
+			display: none;
+		}
+
+	</style>
+
+	<script type="text/javascript">
+
+		window.addEventListener('load', function(){
+
+
+			var headerDiv = document.getElementById("headerDiv");
+			var headerText = document.getElementById("headerText");
+			var mainDiv = document.getElementById("mainDiv");
+			var weatherDiv = document.getElementById("weatherDiv");
+			var seasonsDiv = document.getElementById("seasonsDiv");
+			var placesDiv = document.getElementById("placesDiv");
+			var materialsDiv = document.getElementById("materialsDiv"); 
+
+			var mainMenu = document.getElementById("main");
+			var weatherMenu = document.getElementById("weatherMenu");
+			var seasonsMenu = document.getElementById("seasonsMenu");
+			var placesMenu = document.getElementById("placesMenu");
+			var materialsMenu = document.getElementById("materialsMenu");
+
+			
+			mainMenu.addEventListener('change', function(){
+				
+				console.log("changed");
+
+				if (mainMenu.value == 'Default'){
+					console.log('weather selected');
+					document.getElementById("weatherDiv").style.display = "none";
+					document.getElementById("seasonsDiv").style.display = "none";
+					document.getElementById("placesDiv").style.display = "none";
+					document.getElementById("materialsDiv").style.display = "none";
+
+					document.getElementById("headerDiv").style.backgroundImage = "none";
+
+					headerText.innerHTML = "Select a Category";
+				}
+				
+				if (mainMenu.value == 'Weather'){
+					console.log('weather selected');
+					document.getElementById("weatherDiv").style.display = "inline";
+					document.getElementById("seasonsDiv").style.display = "none";
+					document.getElementById("placesDiv").style.display = "none";
+					document.getElementById("materialsDiv").style.display = "none";
+
+					document.getElementById("headerDiv").style.backgroundImage = "none";
+					headerText.innerHTML = "Select a Weather feature";
+				}
+
+				if (mainMenu.value == 'Seasons'){
+					console.log('weather selected');
+					document.getElementById("weatherDiv").style.display = "none";
+					document.getElementById("seasonsDiv").style.display = "inline";
+					document.getElementById("placesDiv").style.display = "none";
+					document.getElementById("materialsDiv").style.display = "none";					
+
+					document.getElementById("headerDiv").style.backgroundImage = "none";
+					headerText.innerHTML = "Select a Seasonal feature";
+				}
+
+				if (mainMenu.value == 'Places'){
+					console.log('weather selected');
+					document.getElementById("weatherDiv").style.display = "none";
+					document.getElementById("seasonsDiv").style.display = "none";
+					document.getElementById("placesDiv").style.display = "inline";
+					document.getElementById("materialsDiv").style.display = "none";
+					
+					document.getElementById("headerDiv").style.backgroundImage = "none";
+					headerText.innerHTML = "Select a Place";
+				}
+
+				if (mainMenu.value == 'Materials'){
+					console.log('weather selected');
+					document.getElementById("weatherDiv").style.display = "none";
+					document.getElementById("seasonsDiv").style.display = "none";
+					document.getElementById("placesDiv").style.display = "none";
+					document.getElementById("materialsDiv").style.display = "inline";
+					
+					document.getElementById("headerDiv").style.backgroundImage = "none";
+					headerText.innerHTML = "Select a Material";
+				}
+			
+			})
+
+			weatherMenu.addEventListener('change', function(){
+
+				console.log('weather selection changed');
+
+				if (weatherMenu.value == 'weather'){
+					console.log('weather selected');
+					document.getElementById("headerDiv").style.backgroundImage = "none";
+					weatherMenu.style.background = "rgb(255,255,255)";
+					headerText.innerHTML = "Select a Weather feature";
+
+				}
+
+				if (weatherMenu.value == 'Overcast'){
+					console.log('overcast selected');
+					document.getElementById("headerDiv").style.backgroundImage = "url('images/weather/overcast/clouds-mammatus-overcast-1133989-3872x2592.jpg')";
+					weatherMenu.style.background = "rgb(130, 139, 145)";
+					headerText.innerHTML = "";
+
+					httpGet('../green');
+				}
+
+				if (weatherMenu.value == 'Sunny'){
+					console.log('sunny selected');
+					document.getElementById("headerDiv").style.backgroundImage = "url('images/weather/sunny/sunshine_.jpg')";
+					weatherMenu.style.background = "rgb(12, 151, 239)";
+					headerText.innerHTML = "";
+
+					// $.get("../white", function(data){
+				 //        console.log("Data: " + data);
+				 //    });
+
+					httpGet('../white');
+				}
+
+				if (weatherMenu.value == 'Rainy'){
+					console.log('rainy selected');
+					document.getElementById("headerDiv").style.backgroundImage = "url('images/weather/rainy/3d-abstract_hdwallpaper_rainy-days_26958.jpg')";
+					weatherMenu.style.background = "rgb(100, 142, 146)";
+					headerText.innerHTML = "";
+				}
+
+			});
+
+
+			seasonsMenu.addEventListener('change', function(){
+
+				console.log('season selection changed');
+
+				if (seasonsMenu.value == 'season'){
+					console.log('weather selected');
+					document.getElementById("headerDiv").style.backgroundImage = "none";
+					seasonsMenu.style.background = "rgb(255,255,255)";
+					headerText.innerHTML = "Select a Seasonal feature";
+
+				}
+
+				if (seasonsMenu.value == 'spring'){
+					console.log('Spring selected');
+					document.getElementById("headerDiv").style.backgroundImage = "url('images/seasons/spring/Spring-Scenery-picspaper-com-600x375.jpg')";
+					seasonsMenu.style.background = "rgb(241, 249, 254)";
+					headerText.innerHTML = "";
+				}
+
+				if (seasonsMenu.value == 'summer'){
+					console.log('Summer selected');
+					document.getElementById("headerDiv").style.backgroundImage = "url('images/seasons/summer/sun-and-sunflowers.jpg')";
+					seasonsMenu.style.background = "rbg(175, 205, 241)";
+					headerText.innerHTML = "";
+				}
+
+				if (seasonsMenu.value == 'autumn'){
+					console.log('Autumn selected');
+					document.getElementById("headerDiv").style.backgroundImage = "url('images/seasons/autumn/pathway_in_the_autumn_forest-1556528.jpg')";
+					seasonsMenu.style.background = "rgb(227, 127, 13)";
+					headerText.innerHTML = "";
+				}
+
+				if (seasonsMenu.value == 'winter'){
+					console.log('Winter selected');
+					document.getElementById("headerDiv").style.backgroundImage = "url('images/seasons/winter/winter_sunshine_1600x1200.jpg')";
+					seasonsMenu.style.background = "rgb(37, 57, 88)";
+					headerText.innerHTML = "";
+				}
+
+			});
+
+
+			placesMenu.addEventListener('change', function(){
+
+				console.log('places selection changed');
+
+				if (placesMenu.value == 'place'){
+					console.log('weather selected');
+					document.getElementById("headerDiv").style.backgroundImage = "none";
+					placesMenu.style.background = "rgb(255,255,255)";
+					headerText.innerHTML = "Select a Place";
+
+				}
+
+				if (placesMenu.value == 'Ronchamp'){
+					console.log('Ronchamp selected');
+					document.getElementById("headerDiv").style.backgroundImage = "url('images/ronchamp01-format.jpg')";
+					placesMenu.style.background = "rgb(102, 97, 88)";
+					headerText.innerHTML = "";
+				}
+
+				if (placesMenu.value == 'Taj Mahal'){
+					console.log('Taj Mahal selected');
+					document.getElementById("headerDiv").style.backgroundImage = "url('images/tajmahal01-format.png')";
+					placesMenu.style.background = "rgb(133, 111, 62)";
+					headerText.innerHTML = "";
+				}
+
+				if (placesMenu.value == 'Barcelona Pavilion'){
+					console.log('Barcelona Pavilion selected');
+					document.getElementById("headerDiv").style.backgroundImage = "url('images/barcelona01-format.jpg')";
+					placesMenu.style.background = "rgb(128, 129, 121)";
+					headerText.innerHTML = "";
+				}
+
+			});
+
+
+			materialsMenu.addEventListener('change', function(){
+
+				console.log('materials selection changed');
+
+				if (materialsMenu.value == 'place'){
+					console.log('weather selected');
+					document.getElementById("headerDiv").style.backgroundImage = "none";
+					materialsMenu.style.background = "rgb(255,255,255)";
+					headerText.innerHTML = "Select a Material";
+
+				}
+
+				if (materialsMenu.value == 'Granite'){
+					console.log('Granite selected');
+					document.getElementById("headerDiv").style.backgroundImage = "url('images/granite01-format.jpg')";
+					materialsMenu.style.background = "rgb(145, 137, 130)";
+					headerText.innerHTML = "";
+				}
+
+				if (materialsMenu.value == 'Terracotta'){
+					console.log('Terracotta selected');
+					document.getElementById("headerDiv").style.backgroundImage = "url('images/terracotta01-format.png')";
+					materialsMenu.style.background = "rgb(170, 96, 73)";
+					headerText.innerHTML = "";
+				}
+
+				if (materialsMenu.value == 'Oak'){
+					console.log('Oak selected');
+					document.getElementById("headerDiv").style.backgroundImage = "url('images/oak01-format.jpg')";
+					materialsMenu.style.background = "rgb(122, 107, 90)";
+					headerText.innerHTML = "";
+				}
+
+			});
+
+			function httpGet(theUrl){
+			    console.log('trying to send' + theUrl);
+			    var xmlHttp = null;
+			    xmlHttp = new XMLHttpRequest();
+			    xmlHttp.open( "GET", theUrl, true );
+			    xmlHttp.send( null );
+			    console.log (xmlHttp.responseText);
+			}
+
+		})		
+
+	</script>
+	
+	<title>David and Saki's Lighting Controller</title>
+</head>
+
+<body>
+
+	<div class="header" id="headerDiv">
+		<div class="headerText" id="headerText"> test interface for lighting controller</div>
+	</div>
+
+	<div class="dropDown" id="mainDiv">
+
+		<select id="main">
+			<option value="Default">Category ... </option>
+			<option value="Weather">Weather</option>
+			<option value="Seasons">Seasons</option>
+			<option value="Places">Places</option>
+			<option value="Materials">Materials</option>
+		</select>	
+
+	</div>
+
+	<div class="dropDown" id="weatherDiv">
+
+		<select id="weatherMenu">
+		  <option value="weather">Select Weather</option>
+		  <option value="Sunny">Sunny</option>
+		  <option value="Overcast">Overcast</option>
+		  <option value="Rainy">Rainy</option>
+		</select>	
+
+	</div>
+
+	<div class="dropDown" id='seasonsDiv'>
+
+		<select id="seasonsMenu">
+		  <option value="season">Select Season</option>		
+		  <option value="spring">Spring</option>
+		  <option value="summer">Summer</option>
+		  <option value="autumn">Autumn</option>
+		  <option value="winter">Winter</option>
+		</select>	
+
+	</div>
+
+	<div class="dropDown" id='placesDiv'>
+
+		<select id="placesMenu">
+		  <option value="place">Select Place</option>
+		  <option value="Ronchamp">Notre Dame du Ronchamp</option>
+		  <option value="Taj Mahal">Taj Mahal</option>
+		  <option value="Barcelona Pavilion">Barcelona Pavilion</option>
+		</select>	
+
+	</div>
+
+	<div class="dropDown" id='materialsDiv'>
+
+		<select id="materialsMenu">
+		  <option value="material">Select Material</option>
+		  <option value="Granite">Granite</option>
+		  <option value="Terracotta">Terracotta</option>
+		  <option value="Oak">Oak</option>
+		</select>	
+
+	</div>
+
+
+</body>
+</html>
