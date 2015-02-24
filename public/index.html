@@ -174,7 +174,7 @@
 					weatherMenu.style.background = "rgb(130, 139, 145)";
 					headerText.innerHTML = "";
 
-					httpGet('../green');
+					httpGet('../overcast');
 				}
 
 				if (weatherMenu.value == 'Sunny'){
@@ -187,7 +187,7 @@
 				 //        console.log("Data: " + data);
 				 //    });
 
-					httpGet('../white');
+					httpGet('../sunny');
 				}
 
 				if (weatherMenu.value == 'Rainy'){
@@ -195,6 +195,8 @@
 					document.getElementById("headerDiv").style.backgroundImage = "url('images/weather/rainy/3d-abstract_hdwallpaper_rainy-days_26958.jpg')";
 					weatherMenu.style.background = "rgb(100, 142, 146)";
 					headerText.innerHTML = "";
+
+					httpGet('../rainy');
 				}
 
 			});
@@ -217,6 +219,8 @@
 					document.getElementById("headerDiv").style.backgroundImage = "url('images/seasons/spring/Spring-Scenery-picspaper-com-600x375.jpg')";
 					seasonsMenu.style.background = "rgb(241, 249, 254)";
 					headerText.innerHTML = "";
+
+					httpGet('../spring');
 				}
 
 				if (seasonsMenu.value == 'summer'){
@@ -224,6 +228,8 @@
 					document.getElementById("headerDiv").style.backgroundImage = "url('images/seasons/summer/sun-and-sunflowers.jpg')";
 					seasonsMenu.style.background = "rbg(175, 205, 241)";
 					headerText.innerHTML = "";
+
+					httpGet('../summer');
 				}
 
 				if (seasonsMenu.value == 'autumn'){
@@ -231,6 +237,8 @@
 					document.getElementById("headerDiv").style.backgroundImage = "url('images/seasons/autumn/pathway_in_the_autumn_forest-1556528.jpg')";
 					seasonsMenu.style.background = "rgb(227, 127, 13)";
 					headerText.innerHTML = "";
+
+					httpGet('../autumn');
 				}
 
 				if (seasonsMenu.value == 'winter'){
@@ -238,6 +246,8 @@
 					document.getElementById("headerDiv").style.backgroundImage = "url('images/seasons/winter/winter_sunshine_1600x1200.jpg')";
 					seasonsMenu.style.background = "rgb(37, 57, 88)";
 					headerText.innerHTML = "";
+
+					httpGet('../winter');
 				}
 
 			});
@@ -260,6 +270,8 @@
 					document.getElementById("headerDiv").style.backgroundImage = "url('images/ronchamp01-format.jpg')";
 					placesMenu.style.background = "rgb(102, 97, 88)";
 					headerText.innerHTML = "";
+
+					httpGet('../ronchamp');
 				}
 
 				if (placesMenu.value == 'Taj Mahal'){
@@ -267,6 +279,8 @@
 					document.getElementById("headerDiv").style.backgroundImage = "url('images/tajmahal01-format.png')";
 					placesMenu.style.background = "rgb(133, 111, 62)";
 					headerText.innerHTML = "";
+
+					httpGet('../tajmahal');
 				}
 
 				if (placesMenu.value == 'Barcelona Pavilion'){
@@ -274,6 +288,8 @@
 					document.getElementById("headerDiv").style.backgroundImage = "url('images/barcelona01-format.jpg')";
 					placesMenu.style.background = "rgb(128, 129, 121)";
 					headerText.innerHTML = "";
+
+					httpGet('../barcelona');
 				}
 
 			});
@@ -296,6 +312,8 @@
 					document.getElementById("headerDiv").style.backgroundImage = "url('images/granite01-format.jpg')";
 					materialsMenu.style.background = "rgb(145, 137, 130)";
 					headerText.innerHTML = "";
+
+					httpGet('../granite');
 				}
 
 				if (materialsMenu.value == 'Terracotta'){
@@ -303,6 +321,8 @@
 					document.getElementById("headerDiv").style.backgroundImage = "url('images/terracotta01-format.png')";
 					materialsMenu.style.background = "rgb(170, 96, 73)";
 					headerText.innerHTML = "";
+
+					httpGet('../terracotta');
 				}
 
 				if (materialsMenu.value == 'Oak'){
@@ -310,6 +330,8 @@
 					document.getElementById("headerDiv").style.backgroundImage = "url('images/oak01-format.jpg')";
 					materialsMenu.style.background = "rgb(122, 107, 90)";
 					headerText.innerHTML = "";
+
+					httpGet('../oak');
 				}
 
 			});
@@ -321,6 +343,13 @@
 			    xmlHttp.open( "GET", theUrl, true );
 			    xmlHttp.send( null );
 			    console.log (xmlHttp.responseText);
+			}
+
+			function httpPost(theUrl){
+				var xmlHttp = new XMLHttpRequest();
+				xmlHttp.open("POST", theUrl, true);
+				xmlHttp.send( null );
+				console.log (xmlHttp.responseText);
 			}
 
 		})		
