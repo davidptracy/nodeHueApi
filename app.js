@@ -1,7 +1,6 @@
-
-
-
-//================== EXPRESS ==================
+//===========================================================
+//======================== EXPRESS ==========================
+//===========================================================
 
 var express = require('express');
 var app = express();
@@ -12,19 +11,6 @@ app.get('/', function (req, res) {
 	res.render('index.html');
   // res.send('Hello World!')
 })
-
-// // respond with "Hello World!" on the homepage
-// app.get('/white', function (req, res) {
-// 	setWhite();
-//   res.send('White');
-// })
-
-// // accept GET request at /user
-// app.get('/green', function (req, res) {
-// 	console.log("got a user request!");
-// 	setGreen();
-//   res.send('Green');
-// })
 
 app.get('/overcast', function (req, res) {
   console.log("got a user request!");
@@ -104,6 +90,18 @@ app.get('/oak', function (req, res) {
   res.send('oak');
 })
 
+app.get('/testDim', function (req, res) {
+  console.log("got a user request!");
+  setBrightness(50);
+  res.send('oak');
+})
+
+app.get('/testBright', function (req, res) {
+  console.log("got a user request!");
+  setBrightness(100);
+  res.send('oak');
+})
+
 var server = app.listen(3000, function () {
 
   var host = server.address().address
@@ -113,7 +111,40 @@ var server = app.listen(3000, function () {
 
 })
 
-//================== HUE-API ==================
+
+//========================================================
+//=============== SOCKET.IO PORTION ======================
+//========================================================
+
+var io = require('socket.io').listen(server);
+
+var connectedSockets = [];
+
+io.sockets.on('connection', function (socket) { 
+
+  console.log("We have a new client: " + socket.id);
+
+  //add it to the array of connected sockets
+  connectedSockets.push(socket);
+
+});
+
+io.sockets.on('disconnect', function (socket) {
+
+  console.log("Client has disconnected!" + socket.id);
+  
+  var indexToRemove = connectedSockets.indexOf(socket);
+  connectedSockets.splice(indexToRemove, 1);
+
+});
+
+io.sockets.on('sensorChange', function(data){
+  setBrightness(data);
+});
+
+//===========================================================
+//======================== HUE-API ==========================
+//===========================================================
 
 var hue = require("node-hue-api"),
     HueApi = hue.HueApi,
@@ -128,36 +159,18 @@ var host = '128.122.151.166',
     api = new HueApi(host, username),
     state = lightState.create();
 
-// Set light state to 'on' with warm white value of 500 and brightness set to 100%
-// state = lightState.create().on().white(500, 100);
-
-// --------------------------
-// Using a promise
-// api.setLightState(6, state.on().rgb(255,255,50))
-//     .then(displayResult)
-//     .done();
-
-// --------------------------
-// Using a callback
-
-// function setGreen(){
-//     api.setLightState(2, state.on().rgb(255,255,50), function(err, lights) {
-//         if (err) throw err;
-//         displayResult(lights);
-//     });
-// }
-
-// function setWhite(){
-//     api.setLightState(2, state.on().rgb(255,255,255), function(err, lights) {
-//         if (err) throw err;
-//         displayResult(lights);
-//     });
-// }
-
 function setColor(color){
     console.log(color);
     api.setLightState(2, state.on().rgb(color), function(err, lights) {
         if (err) throw err;
         displayResult(lights);
     });
+}
+
+function setBrightness(value){
+  api.setLightState(2, state.on().brightness(value), function(err, lights) {
+        if (err) throw err;
+        displayResult(lights);
+    });
+
 }
