@@ -137,6 +137,11 @@ io.sockets.on('connection', function (socket) {
 
   });
 
+  socket.on('sensorChange', function(data){
+    setBrightness(data);
+    console.log("got sensor data from arduino!" + data);
+  });
+
 });
 
 io.sockets.on('sensorChange', function(data){
