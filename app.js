@@ -5,6 +5,8 @@
 var express = require('express');
 var app = express();
 
+var brightness = 100;
+
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function (req, res) {
@@ -145,9 +147,15 @@ io.sockets.on('connection', function (socket) {
 });
 
 io.sockets.on('sensorChange', function(data){
-  setBrightness(data);
+  brightness = data;
   console.log("got sensor data from arduino!" + data);
 });
+
+function adjustBrightness(){
+  setBrightness(brightness);
+}
+
+setInterval(adjustBrightness, 500);
 
 //===========================================================
 //======================== HUE-API ==========================
