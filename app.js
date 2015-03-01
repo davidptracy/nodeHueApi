@@ -155,7 +155,7 @@ function adjustBrightness(){
   setBrightness(brightness);
 }
 
-setInterval(adjustBrightness, 500);
+setInterval(adjustBrightness, 1000);
 
 //===========================================================
 //======================== HUE-API ==========================
