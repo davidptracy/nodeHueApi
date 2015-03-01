@@ -127,16 +127,19 @@ io.sockets.on('connection', function (socket) {
   //add it to the array of connected sockets
   connectedSockets.push(socket);
 
+
+  socket.on('disconnect', function () {
+
+    console.log("Client has disconnected!" + socket.id);
+    
+    var indexToRemove = connectedSockets.indexOf(socket);
+    connectedSockets.splice(indexToRemove, 1);
+
+  });
+
 });
 
-io.sockets.on('disconnect', function (socket) {
 
-  console.log("Client has disconnected!" + socket.id);
-  
-  var indexToRemove = connectedSockets.indexOf(socket);
-  connectedSockets.splice(indexToRemove, 1);
-
-});
 
 io.sockets.on('sensorChange', function(data){
   setBrightness(data);
