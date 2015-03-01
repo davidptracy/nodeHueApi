@@ -140,22 +140,22 @@ io.sockets.on('connection', function (socket) {
   });
 
   socket.on('sensorChange', function(data){
-    setBrightness(data);
+    brightness = data;
     console.log("got sensor data from arduino!" + data);
   });
 
 });
 
-io.sockets.on('sensorChange', function(data){
-  brightness = data;
-  console.log("got sensor data from arduino!" + data);
-});
+// io.sockets.on('sensorChange', function(data){
+//   brightness = data;
+//   console.log("got sensor data from arduino!" + data);
+// });
 
 function adjustBrightness(){
   setBrightness(brightness);
 }
 
-setInterval(adjustBrightness, 1000);
+setInterval(adjustBrightness, 250);
 
 //===========================================================
 //======================== HUE-API ==========================
