@@ -6,6 +6,7 @@ var express = require('express');
 var app = express();
 
 var brightness = 100;
+var temperature = 180;
 
 app.use(express.static(__dirname + '/public'));
 
@@ -144,6 +145,12 @@ io.sockets.on('connection', function (socket) {
     console.log("got sensor data from arduino!" + data);
   });
 
+  socket.on('clientGyro', function(data){
+    brightness = map_range(data[2], -90, 90, 30, 100);
+    temperature = map_range(data[1], -180, 180, 0, 359);
+    console.log("got data from cellphone!" + data);
+  });
+
 });
 
 // io.sockets.on('sensorChange', function(data){
@@ -152,10 +159,10 @@ io.sockets.on('connection', function (socket) {
 // });
 
 function adjustBrightness(){
-  setBrightness(brightness);
+  setBrightness();
 }
 
-setInterval(adjustBrightness, 250);
+setInterval(adjustBrightness, 250); 
 
 //===========================================================
 //======================== HUE-API ==========================
@@ -182,10 +189,18 @@ function setColor(color){
     });
 }
 
-function setBrightness(value){
-  api.setLightState(2, state.on().brightness(value), function(err, lights) {
+function setBrightness(){
+  api.setLightState(2, state.on().brightness(brightness).ct(temperature), function(err, lights) {
         if (err) throw err;
         displayResult(lights);
     });
 
+}
+
+//===========================================================
+//===================== GLOBAL METHODS ======================
+//===========================================================
+
+function map_range(value, low1, high1, low2, high2) {
+    return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
 }

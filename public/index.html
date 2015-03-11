@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	
+	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 	<link href='http://fonts.googleapis.com/css?family=Lato:300,100' rel='stylesheet' type='text/css'>
 	<style type="text/css">
+		
 		body{
 			background: white;
 			font-family: 'Lato', sans-serif;
@@ -34,7 +35,7 @@
 		}
 
 		.dropDown{
-			width: 30%;
+			width: 25%;
 			float: left;
 			margin: 20px;
 			padding: 10px;
@@ -47,6 +48,19 @@
 			display: inline;
 		}
 
+		.adjust{
+			width: 25%;
+			float: left;
+			margin: 20px;
+			padding: 10px;
+			color: black;
+			border-color: rgb(200,200,200);
+			border-style: none;
+			border-width: 1px;
+			min-height: 350px;
+			max-width: 30%;
+		}
+
 		select {
 			background: white;
 			width: 100%;
@@ -54,6 +68,20 @@
 			font-size: 36px;
 			height: 50px;
 			border-style: solid;
+		}
+
+		p {
+			background: white;
+			width: 100%;
+			font-family:  'Lato', sans-serif;
+			font-size: 36px;
+			height: 50px;
+			border-style: solid;
+			border-width: 1px;
+			border-radius: 10px;
+			margin: 0px;
+			padding-left: 10px;
+			text-align: center;
 		}
 
 		#weatherDiv {
@@ -72,12 +100,28 @@
 			display: none;
 		}
 
+		#adjustDiv {
+			display: inline;
+		}
+
 	</style>
 
 	<script type="text/javascript">
 
-		window.addEventListener('load', function(){
+	    // =============================================
+	    // 1 - connect to node socket.io server
+	    // =============================================
+	    var socket = io();
 
+	    socket.on('connect', function() {
+	      console.log("Connected");
+	    });
+
+	    var alpha, beta, gamma;
+
+	    var adjust = false;
+
+		window.addEventListener('load', function(){			
 
 			var headerDiv = document.getElementById("headerDiv");
 			var headerText = document.getElementById("headerText");
@@ -85,7 +129,8 @@
 			var weatherDiv = document.getElementById("weatherDiv");
 			var seasonsDiv = document.getElementById("seasonsDiv");
 			var placesDiv = document.getElementById("placesDiv");
-			var materialsDiv = document.getElementById("materialsDiv"); 
+			var materialsDiv = document.getElementById("materialsDiv");
+			var adjustDiv = document.getElementById("adjustDiv"); 
 
 			var mainMenu = document.getElementById("main");
 			var weatherMenu = document.getElementById("weatherMenu");
@@ -93,6 +138,22 @@
 			var placesMenu = document.getElementById("placesMenu");
 			var materialsMenu = document.getElementById("materialsMenu");
 
+
+		    //Check for support for DeviceOrientation event
+			if(window.DeviceOrientationEvent) {
+				window.addEventListener('deviceorientation', function(event) {
+			        
+			        alpha = event.alpha;
+			        beta = event.beta;
+			        gamma = event.gamma;
+					          
+			    }, false);
+			}
+
+			adjustDiv.addEventListener("click", function(){
+				adjust = !adjust;
+				console.log( adjust );
+			});
 			
 			mainMenu.addEventListener('change', function(){
 				
@@ -108,6 +169,8 @@
 					document.getElementById("headerDiv").style.backgroundImage = "none";
 
 					headerText.innerHTML = "Select a Category";
+
+					adjustDiv.style.display = "none";
 				}
 				
 				if (mainMenu.value == 'Weather'){
@@ -166,6 +229,9 @@
 					weatherMenu.style.background = "rgb(255,255,255)";
 					headerText.innerHTML = "Select a Weather feature";
 
+					document.getElementById("adjustDiv").style.display = "inline";
+
+
 				}
 
 				if (weatherMenu.value == 'Overcast'){
@@ -173,8 +239,11 @@
 					document.getElementById("headerDiv").style.backgroundImage = "url('images/weather/overcast/clouds-mammatus-overcast-1133989-3872x2592.jpg')";
 					weatherMenu.style.background = "rgb(130, 139, 145)";
 					headerText.innerHTML = "";
-
 					httpGet('../overcast');
+
+					adjustDiv.style.display = "inline";
+
+					// document.getElementById("adjustDiv").style.display = "inline";
 				}
 
 				if (weatherMenu.value == 'Sunny'){
@@ -188,6 +257,8 @@
 				 //    });
 
 					httpGet('../sunny');
+
+					adjustDiv.style.display = "inline";
 				}
 
 				if (weatherMenu.value == 'Rainy'){
@@ -197,6 +268,8 @@
 					headerText.innerHTML = "";
 
 					httpGet('../rainy');
+
+					adjustDiv.style.display = "inline";
 				}
 
 			});
@@ -212,6 +285,8 @@
 					seasonsMenu.style.background = "rgb(255,255,255)";
 					headerText.innerHTML = "Select a Seasonal feature";
 
+					adjustDiv.style.display = "none";
+
 				}
 
 				if (seasonsMenu.value == 'spring'){
@@ -221,6 +296,8 @@
 					headerText.innerHTML = "";
 
 					httpGet('../spring');
+
+					adjustDiv.style.display = "inline";
 				}
 
 				if (seasonsMenu.value == 'summer'){
@@ -230,6 +307,8 @@
 					headerText.innerHTML = "";
 
 					httpGet('../summer');
+
+					adjustDiv.style.display = "inline";
 				}
 
 				if (seasonsMenu.value == 'autumn'){
@@ -239,6 +318,8 @@
 					headerText.innerHTML = "";
 
 					httpGet('../autumn');
+
+					adjustDiv.style.display = "inline";
 				}
 
 				if (seasonsMenu.value == 'winter'){
@@ -248,6 +329,8 @@
 					headerText.innerHTML = "";
 
 					httpGet('../winter');
+
+					adjustDiv.style.display = "inline";
 				}
 
 			});
@@ -263,6 +346,8 @@
 					placesMenu.style.background = "rgb(255,255,255)";
 					headerText.innerHTML = "Select a Place";
 
+					adjustDiv.style.display = "none";
+
 				}
 
 				if (placesMenu.value == 'Ronchamp'){
@@ -272,6 +357,8 @@
 					headerText.innerHTML = "";
 
 					httpGet('../ronchamp');
+
+					adjustDiv.style.display = "inline";
 				}
 
 				if (placesMenu.value == 'Taj Mahal'){
@@ -281,6 +368,8 @@
 					headerText.innerHTML = "";
 
 					httpGet('../tajmahal');
+
+					adjustDiv.style.display = "inline";
 				}
 
 				if (placesMenu.value == 'Barcelona Pavilion'){
@@ -290,6 +379,8 @@
 					headerText.innerHTML = "";
 
 					httpGet('../barcelona');
+
+					adjustDiv.style.display = "inline";
 				}
 
 			});
@@ -305,6 +396,8 @@
 					materialsMenu.style.background = "rgb(255,255,255)";
 					headerText.innerHTML = "Select a Material";
 
+					adjustDiv.style.display = "none";
+
 				}
 
 				if (materialsMenu.value == 'Granite'){
@@ -314,6 +407,8 @@
 					headerText.innerHTML = "";
 
 					httpGet('../granite');
+
+					adjustDiv.style.display = "inline";
 				}
 
 				if (materialsMenu.value == 'Terracotta'){
@@ -323,6 +418,8 @@
 					headerText.innerHTML = "";
 
 					httpGet('../terracotta');
+
+					adjustDiv.style.display = "inline";
 				}
 
 				if (materialsMenu.value == 'Oak'){
@@ -332,6 +429,8 @@
 					headerText.innerHTML = "";
 
 					httpGet('../oak');
+
+					adjustDiv.style.display = "inline";
 				}
 
 			});
@@ -352,7 +451,22 @@
 				console.log (xmlHttp.responseText);
 			}
 
-		})		
+		});
+
+		function sendGyroVals(){
+			
+			var values = [alpha, beta, gamma];
+
+			if (alpha!=null || beta!=null || gamma!=null) {
+				if (adjust){
+					socket.emit('clientGyro',values);
+					console.log("sending gyro vals");
+				}
+			}
+
+		}
+
+		setInterval(sendGyroVals, 100);		
 
 	</script>
 	
@@ -422,6 +536,9 @@
 
 	</div>
 
+	<div class="adjust" id="adjustDiv">
+		<p>Adjust</p>
+	</div>
 
 </body>
 </html>

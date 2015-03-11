@@ -1,5 +1,8 @@
+// adapted for Arduino Yun by David P Tracy
+
 // MPU-6050 Short Example Sketch
 // By Arduino User JohnChi
+
 // August 17, 2014
 // Public Domain
 
@@ -18,13 +21,11 @@ char sensorStr[3];
 int16_t AcX,AcY,AcZ,Tmp,GyX,GyY,GyZ;
 
 void setup(){
-  
-  delay(150000);
+  //delay to prevent ATMEL chip from interrupting Linux load.
+//  delay(90000);
   
   Bridge.begin();
-  Serial.begin(9600);
- 
-  
+  Serial.begin(9600); 
  
   pinMode(7, INPUT);
   
@@ -35,8 +36,6 @@ void setup(){
   Wire.endTransmission(true);  
   
 //  while(!Serial);
-
-  
   
   // launch the echo.js script asynchronously:
   node.runShellCommandAsynchronously("killall nodejs");
